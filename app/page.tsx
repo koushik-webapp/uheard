@@ -1,4 +1,3 @@
-import AnnouncementBar from "./components/AnnouncementBar";
 import { SimpleHeader } from "@/components/ui/simple-header";
 import Hero from "./components/Hero";
 import FeaturedCollections from "./components/FeaturedCollections";
@@ -9,7 +8,6 @@ import Footer from "./components/Footer";
 export default function Home() {
   return (
     <>
-      <AnnouncementBar />
       <SimpleHeader />
       <main>
         <Hero />
