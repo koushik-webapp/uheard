@@ -16,8 +16,14 @@ export default function Newsletter() {
   };
 
   return (
-    <section ref={ref} className="section-pad bg-[#000]">
-      <div className="container-md text-center">
+    <section ref={ref} className="section-pad bg-[#000]" style={{ position: 'relative' }}>
+      {/* Top fade from Contact dark bottom */}
+      <div aria-hidden="true" style={{
+        position: 'absolute', top: 0, left: 0, right: 0,
+        height: '80px', pointerEvents: 'none',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,1) 100%)',
+      }} />
+      <div className="container-md text-center" style={{ position: 'relative', zIndex: 1 }}>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}

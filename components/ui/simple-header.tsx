@@ -7,24 +7,23 @@ import { motion, AnimatePresence } from 'framer-motion';
 const navLinks = [
   { label: 'Home',        href: '#' },
   { label: 'Our Story',   href: '#story' },
-  { label: 'Collections', href: '#collections' },
+  { label: 'Collections', href: '/collections' },
   { label: 'Journal',     href: '#journal' },
 ];
 
 export function SimpleHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [visible, setVisible]   = useState(true);
-  const [lastY, setLastY]       = useState(0);
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => {
-      const y = window.scrollY;
-      setVisible(y < lastY || y < 80);
-      setLastY(y);
+      // Switch style once user scrolls past 90% of viewport height (hero section)
+      setScrolled(window.scrollY > window.innerHeight * 0.9);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // run once on mount
     return () => window.removeEventListener('scroll', onScroll);
-  }, [lastY]);
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? 'hidden' : '';
@@ -33,7 +32,7 @@ export function SimpleHeader() {
 
   return (
     <>
-      {/* Transparent full-width navbar */}
+      {/* Navbar — transparent on hero, solid white when scrolled */}
       <motion.header
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -44,11 +43,16 @@ export function SimpleHeader() {
           left: 0,
           right: 0,
           zIndex: 50,
-          height: '68px',
-          background: 'transparent',
+          height: scrolled ? '62px' : '68px',
+          background: scrolled ? 'rgba(255,255,255,0.97)' : 'transparent',
+          backdropFilter: scrolled ? 'blur(16px) saturate(180%)' : 'none',
+          WebkitBackdropFilter: scrolled ? 'blur(16px) saturate(180%)' : 'none',
+          borderBottom: scrolled ? '1px solid rgba(0,0,0,0.07)' : 'none',
+          boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.06)' : 'none',
           display: 'flex',
           alignItems: 'center',
           padding: '0 clamp(16px, 4vw, 48px)',
+          transition: 'height 0.35s ease, background 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease',
         }}
       >
         {/* LEFT — logo + hamburger */}

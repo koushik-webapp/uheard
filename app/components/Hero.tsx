@@ -43,9 +43,19 @@ export default function Hero() {
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-center"
+          className="absolute inset-0 w-full h-full object-cover object-bottom"
         />
       </motion.div>
+
+      {/* Bottom fade — dissolves hero into OurStory */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 10,
+          height: '260px', pointerEvents: 'none',
+          background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.72) 70%, rgba(255,255,255,1) 100%)',
+        }}
+      />
 
       {/* Hero content — upper-center */}
       <div
