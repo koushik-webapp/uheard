@@ -6,24 +6,11 @@ import { motion, useInView } from 'framer-motion';
 export default function Newsletter() {
   const ref = useRef<HTMLElement>(null);
   const isInView = useInView(ref, { once: true, margin: '-60px' });
-  const [email, setEmail] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
-  };
+  const [submitted] = useState(false);
 
   return (
-    <section ref={ref} className="section-pad bg-[#000]" style={{ position: 'relative' }}>
-      {/* Top fade from Contact dark bottom */}
-      <div aria-hidden="true" style={{
-        position: 'absolute', top: 0, left: 0, right: 0,
-        height: '80px', pointerEvents: 'none',
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.0) 0%, rgba(0,0,0,1) 100%)',
-      }} />
-      <div className="container-md text-center" style={{ position: 'relative', zIndex: 1 }}>
+    <section ref={ref} className="section-pad bg-[#000]">
+      <div className="container-md text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
@@ -36,23 +23,43 @@ export default function Newsletter() {
             <div className="w-8 h-px bg-[#C62026]" />
           </div>
 
+
           <h2
-            className="text-white font-bold mb-4"
+            className="text-white font-bold mb-3"
             style={{
-              fontFamily: "'Quintessential', Georgia, serif",
-              fontSize: 'clamp(26px, 4vw, 50px)',
-              fontWeight: 400,
-              lineHeight: 1.1,
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: 'clamp(28px, 5vw, 58px)',
+              fontWeight: 800,
+              lineHeight: 1.05,
+              letterSpacing: '-0.01em',
             }}
           >
-            Get 15% off your
-            <br />
-            <em>first order.</em>
+            15% OFF ON CART TOTAL
           </h2>
 
-          <p className="text-white/50 text-[14px] mb-8 max-w-md mx-auto leading-relaxed">
-            Subscribe for early access to new scents, behind-the-scenes content, and exclusive discounts.
+          <p style={{
+            fontFamily: 'Montserrat, sans-serif',
+            fontSize: 'clamp(13px, 1.4vw, 15px)',
+            fontWeight: 500,
+            color: 'rgba(255,255,255,0.55)',
+            letterSpacing: '0.08em',
+            marginBottom: '28px',
+            textAlign: 'center',
+          }}>
+            Use Code&nbsp;
+            <span style={{
+              color: '#ffffff',
+              fontWeight: 800,
+              letterSpacing: '0.12em',
+              background: 'rgba(198,40,38,0.25)',
+              padding: '3px 10px',
+              borderRadius: '4px',
+              border: '1px solid rgba(198,40,38,0.4)',
+            }}>
+              UHEARD15
+            </span>
           </p>
+
 
           {submitted ? (
             <motion.div
@@ -69,27 +76,40 @@ export default function Newsletter() {
               <p className="text-white/40 text-[13px]">Your 15% discount code is on its way.</p>
             </motion.div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-0 max-w-md mx-auto">
-              <input
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                placeholder="Enter your email address"
-                required
-                aria-label="Email address"
-                className="flex-1 px-5 py-4 bg-white/[0.06] border border-white/[0.12] text-white placeholder-white/30 text-[13px] focus:outline-none focus:border-[#C62026] transition-colors"
-              />
-              <button
-                type="submit"
-                className="btn-red whitespace-nowrap"
-                style={{ borderRadius: 0 }}
+            <div className="flex flex-col items-center gap-4 w-full">
+              <a
+                href="/collections"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+                  padding: '14px 40px',
+                  background: '#C62026',
+                  color: '#ffffff',
+                  fontFamily: 'Montserrat, sans-serif',
+                  fontSize: '12px', fontWeight: 700,
+                  letterSpacing: '0.14em', textTransform: 'uppercase',
+                  textDecoration: 'none',
+                  borderRadius: '100px',
+                  boxShadow: '0 6px 24px rgba(198,40,38,0.35)',
+                  transition: 'filter 0.25s ease, transform 0.25s ease',
+                }}
+                onMouseEnter={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1.15)';
+                  (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(-2px)';
+                }}
+                onMouseLeave={e => {
+                  (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1)';
+                  (e.currentTarget as HTMLAnchorElement).style.transform = 'translateY(0)';
+                }}
               >
-                Subscribe
-              </button>
-            </form>
+                Subscribe & Shop Now
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                </svg>
+              </a>
+            </div>
           )}
 
-          <p className="text-white/25 text-[11px] mt-5 tracking-[0.5px]">
+          <p className="text-white/25 text-[11px] mt-6 tracking-[0.5px]">
             No spam. Unsubscribe anytime.
           </p>
         </motion.div>

@@ -5,10 +5,10 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const navLinks = [
-  { label: 'Home',        href: '#' },
-  { label: 'Our Story',   href: '#story' },
+  { label: 'Home',        href: '/' },
+  { label: 'Our Story',   href: '/#story' },
   { label: 'Collections', href: '/collections' },
-  { label: 'Journal',     href: '#journal' },
+  { label: 'Journal',     href: '/#journal' },
 ];
 
 export function SimpleHeader() {
@@ -131,7 +131,7 @@ export function SimpleHeader() {
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: 'auto', flexShrink: 0 }}>
           {/* CONTACT — outlined white */}
           <a
-            href="#contact"
+            href="/#contact"
             style={{
               fontFamily: 'Montserrat, Helvetica Neue, Arial, sans-serif',
               fontSize: '11px',
@@ -163,7 +163,7 @@ export function SimpleHeader() {
 
           {/* SHOP NOW — red solid */}
           <a
-            href="#shop"
+            href="/collections"
             style={{
               fontFamily: 'Montserrat, Helvetica Neue, Arial, sans-serif',
               fontSize: '11px',
@@ -251,8 +251,8 @@ export function SimpleHeader() {
               ))}
               <div style={{ height: '1px', background: 'rgba(0,0,0,0.07)', margin: '4px 0' }} />
               <div style={{ display: 'flex', gap: '8px', padding: '4px' }}>
-                <a href="#contact" onClick={() => setMenuOpen(false)} style={{ flex: 1, textAlign: 'center', padding: '11px', borderRadius: '100px', border: '1px solid rgba(0,0,0,0.18)', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1a1a1a', textDecoration: 'none' }}>Contact</a>
-                <a href="#shop" onClick={() => setMenuOpen(false)} style={{ flex: 1, textAlign: 'center', padding: '11px', borderRadius: '100px', background: '#C62828', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', textDecoration: 'none' }}>Shop Now</a>
+                <a href="/#contact" onClick={() => setMenuOpen(false)} style={{ flex: 1, textAlign: 'center', padding: '11px', borderRadius: '100px', border: '1px solid rgba(0,0,0,0.18)', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#1a1a1a', textDecoration: 'none' }}>Contact</a>
+                <a href="/collections" onClick={() => setMenuOpen(false)} style={{ flex: 1, textAlign: 'center', padding: '11px', borderRadius: '100px', background: '#C62828', fontFamily: 'Montserrat, sans-serif', fontSize: '11px', fontWeight: 600, letterSpacing: '0.08em', textTransform: 'uppercase', color: '#fff', textDecoration: 'none' }}>Shop Now</a>
               </div>
             </motion.div>
           </>

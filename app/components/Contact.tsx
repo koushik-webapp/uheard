@@ -46,16 +46,6 @@ export default function Contact() {
           position: 'absolute', inset: 0,
           background: 'linear-gradient(to right, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 50%)',
         }} />
-        {/* Top fade — continues from Journal bottom bleed */}
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'linear-gradient(to bottom, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 20%)',
-        }} />
-        {/* Bottom fade — into Newsletter */}
-        <div style={{
-          position: 'absolute', inset: 0, pointerEvents: 'none',
-          background: 'linear-gradient(to top, rgba(20,20,20,0.55) 0%, rgba(20,20,20,0) 28%)',
-        }} />
       </div>
 
       {/* ── Content wrapper ── */}

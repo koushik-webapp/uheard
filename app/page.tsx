@@ -1,5 +1,6 @@
 import { SimpleHeader } from "@/components/ui/simple-header";
 import Hero from "./components/Hero";
+import Hero2 from "./components/Hero2";
 import OurStory from "./components/OurStory";
 import Journal from "./components/Journal";
 import Contact from "./components/Contact";
@@ -12,6 +13,7 @@ export default function Home() {
       <SimpleHeader />
       <main>
         <Hero />
+        <Hero2 />
         <OurStory />
         <Journal />
         <Contact />

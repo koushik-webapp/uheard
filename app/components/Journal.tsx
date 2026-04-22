@@ -165,34 +165,10 @@ export default function Journal() {
           </motion.div>
         </AnimatePresence>
 
-        {/* Global ivory wash — reduced to let image breathe */}
+        {/* Subtle readability wash */}
         <div style={{
           position: 'absolute', inset: 0, zIndex: 1,
           background: 'rgba(252,250,248,0.18)',
-        }} />
-
-        {/* Left column fade */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          background: 'linear-gradient(to right, rgba(252,250,248,0.72) 0%, rgba(252,250,248,0.18) 28%, rgba(252,250,248,0) 52%)',
-        }} />
-
-        {/* Right column fade */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          background: 'linear-gradient(to left, rgba(252,250,248,0.38) 0%, rgba(252,250,248,0) 40%)',
-        }} />
-
-        {/* Top fade — picks up from OurStory bottom bleed */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          background: 'linear-gradient(to bottom, rgba(252,250,248,0.88) 0%, rgba(252,250,248,0) 18%)',
-        }} />
-
-        {/* Bottom fade — dissolves into Contact */}
-        <div style={{
-          position: 'absolute', inset: 0, zIndex: 2,
-          background: 'linear-gradient(to top, rgba(255,255,255,0.82) 0%, rgba(255,255,255,0) 22%)',
         }} />
       </div>
 

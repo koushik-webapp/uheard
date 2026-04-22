@@ -1,6 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
+import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 
 
@@ -31,8 +32,8 @@ export default function OurStory() {
       {/* ── Content wrapper ── */}
       <div style={{
         position: 'relative', zIndex: 1,
-        maxWidth: '1200px', margin: '0 auto',
-        padding: '0 clamp(16px, 5vw, 64px)',
+        maxWidth: '100%', margin: '0 auto',
+        padding: '0 clamp(16px, 3vw, 40px)',
       }}>
 
 
@@ -42,31 +43,28 @@ export default function OurStory() {
           style={{
             display: 'grid',
             gridTemplateColumns: '1fr 1fr',
-            gap: 'clamp(32px, 5vw, 72px)',
+            gap: 'clamp(24px, 3vw, 48px)',
             alignItems: 'stretch',
           }}
         >
 
           {/* ── LEFT: Empty image placeholder ── */}
-          <motion.div {...fadeUp(0)} style={{ display: 'flex' }}>
+          <motion.div {...fadeUp(0)} style={{ display: 'flex', alignSelf: 'stretch' }}>
             <div style={{
+              position: 'relative',
               width: '100%',
-              aspectRatio: '3 / 4',
+              height: '100%',
+              minHeight: '300px',
               borderRadius: '4px',
-              background: '#f0eeeb',
-              border: '1px dashed rgba(0,0,0,0.12)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
+              overflow: 'hidden',
             }}>
-              <p style={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: '11px', fontWeight: 500,
-                letterSpacing: '0.12em', textTransform: 'uppercase',
-                color: 'rgba(0,0,0,0.25)', margin: 0,
-              }}>
-                Image coming soon
-              </p>
+              <Image
+                src="/ourstory-img.jpg"
+                alt="Our Story — Jacqueline's Enchanting Candles"
+                fill
+                style={{ objectFit: 'cover', objectPosition: 'center bottom' }}
+                sizes="(max-width: 860px) 100vw, 50vw"
+              />
             </div>
           </motion.div>
 
@@ -100,24 +98,10 @@ export default function OurStory() {
               It began with a simple flame.
             </motion.h2>
 
-            {/* Story paragraphs */}
-            <motion.div {...fadeUp(0.26)} style={{ display: 'flex', flexDirection: 'column', gap: '14px', flex: 1 }}>
-              <p style={bodyStyle}>
-                I began my candle journey in the quiet comfort of my own kitchen—where curiosity slowly turned into craft, and passion found its purpose.
-              </p>
-              <p style={bodyStyle}>
-                What started as a simple love for beautifully scented candles soon became something deeper. I found myself drawn to fragrances that felt just right—each one evoking a memory, a mood, a moment.
-              </p>
-              <p style={bodyStyle}>
-                Then one day, a thought sparked—<em style={{ fontStyle: 'italic', color: '#333' }}>why not create my own?</em> That moment led me to take a candle-making course, where everything finally clicked. What once felt like curiosity became clarity.
-              </p>
-              <p style={bodyStyle}>
-                Inspired and determined, I returned home, gathered everything I needed, and began creating. From that very first pour, Jacqueline&rsquo;s Enchanting Candles was born.
-              </p>
-              <p style={bodyStyle}>
-                What started as a small idea quickly grew into something meaningful. Today, every candle is hand-poured with care—designed to bring warmth, calm, and story into every space.
-              </p>
-            </motion.div>
+            {/* Story paragraph */}
+            <motion.p {...fadeUp(0.26)} style={{ ...bodyStyle, flex: 1 }}>
+              I began my candle journey in the quiet comfort of my own kitchen—where curiosity slowly turned into craft, and passion found its purpose. What started as a simple love for beautifully scented candles soon became something deeper; I found myself drawn to fragrances that felt just right, each one evoking a memory, a mood, a moment. Then one day, a thought sparked—<em style={{ fontStyle: 'italic', color: '#333' }}>why not create my own?</em> That moment led me to take a candle-making course, where everything finally clicked. Inspired and determined, I returned home, gathered everything I needed, and began creating. From that very first pour, Jacqueline&rsquo;s Enchanting Candles was born—and what started as a small idea quickly grew into something meaningful. Today, every candle is hand-poured with care, designed to bring warmth, calm, and story into every space.
+            </motion.p>
 
             {/* Closing line */}
             <motion.p {...fadeUp(0.34)} style={{
@@ -126,9 +110,7 @@ export default function OurStory() {
               fontStyle: 'italic', fontWeight: 400,
               color: '#555555',
               lineHeight: 1.5,
-              margin: '20px 0 0',
-              paddingTop: '18px',
-              borderTop: '1px solid rgba(0,0,0,0.08)',
+              margin: '8px 0 0',
             }}>
               Where every flame tells a story.
             </motion.p>

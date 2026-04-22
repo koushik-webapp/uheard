@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 const fadeIn = (delay: number) => ({
   initial: { opacity: 0 },
@@ -9,11 +9,8 @@ const fadeIn = (delay: number) => ({
   transition: { duration: 1.0, delay, ease: 'easeInOut' as const },
 });
 
-export default function Hero() {
+export default function Hero2() {
   const ref = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
-
-  const candleY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
 
   const titleFont: React.CSSProperties = {
     fontFamily: 'Montserrat, Helvetica Neue, Arial, sans-serif',
@@ -29,35 +26,31 @@ export default function Hero() {
       className="relative min-h-screen w-full overflow-hidden"
     >
       {/* Video background */}
-      <motion.div
-        style={{ y: candleY }}
+      <div
         className="absolute inset-0 z-0"
-        initial={{ opacity: 0, scale: 1.04 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.4, ease: [0.22, 1, 0.36, 1] }}
         aria-hidden="true"
       >
         <video
-          src="/hero-video.mp4"
+          src="/hero-video-2.mp4"
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover object-bottom"
+          className="absolute inset-0 w-full h-full object-cover object-center"
         />
-      </motion.div>
+      </div>
 
-      {/* Hero content — upper-center */}
+      {/* Hero content — left-aligned */}
       <div
-        className="absolute inset-0 z-20 flex flex-col items-center"
-        style={{ paddingTop: '10%' }}
+        className="absolute inset-0 z-20 flex flex-col justify-center"
+        style={{ padding: '0 clamp(32px, 6vw, 96px)' }}
       >
         {/* Title + underline */}
         <motion.div
-          style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
-          {...fadeIn(1.0)}
+          style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
+          {...fadeIn(0.4)}
         >
-          {/* Inline wrapper so underline width = text width */}
+          {/* Inline wrapper so underline width = text width exactly */}
           <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'stretch' }}>
             <div style={{ display: 'flex', alignItems: 'baseline' }}>
               <span style={{ ...titleFont, color: '#C62828' }}>U</span>
@@ -78,15 +71,33 @@ export default function Hero() {
             letterSpacing: '0.07em',
             lineHeight: 1.5,
             marginTop: 'clamp(12px, 1.6vw, 18px)',
+            marginBottom: '10px',
           }}
-          {...fadeIn(1.2)}
+          {...fadeIn(0.6)}
         >
-          Where Every Flame Tells a Story.
+          Every story begins with a quiet flame.
+        </motion.p>
+
+        {/* Subtext */}
+        <motion.p
+          style={{
+            fontFamily: 'Montserrat, Helvetica Neue, Arial, sans-serif',
+            fontWeight: 400,
+            fontSize: 'clamp(13px, 1.3vw, 16px)',
+            color: '#444444',
+            letterSpacing: '0.03em',
+            lineHeight: 1.75,
+            maxWidth: '480px',
+            margin: 0,
+          }}
+          {...fadeIn(0.75)}
+        >
+          Handcrafted candles designed to bring warmth, calm, and meaning into your space.
         </motion.p>
 
         {/* CTA Button */}
         <motion.a
-          href="#collections"
+          href="/collections"
           style={{
             display: 'inline-block',
             marginTop: 'clamp(18px, 2.5vw, 28px)',
@@ -99,12 +110,12 @@ export default function Hero() {
             letterSpacing: '0.12em',
             textTransform: 'uppercase' as const,
             borderRadius: '100px',
-            border: '1px solid rgba(210,170,90,0.2)',
             boxShadow: '0 6px 24px rgba(198,40,40,0.22)',
             textDecoration: 'none',
             transition: 'filter 0.3s ease',
+            alignSelf: 'flex-start',
           }}
-          {...fadeIn(1.4)}
+          {...fadeIn(0.8)}
           onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1.1)'; }}
           onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1)'; }}
         >
