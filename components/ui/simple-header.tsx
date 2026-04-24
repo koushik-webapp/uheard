@@ -18,7 +18,7 @@ export function SimpleHeader() {
   useEffect(() => {
     const onScroll = () => {
       // Switch style once user scrolls past 90% of viewport height (hero section)
-      setScrolled(window.scrollY > window.innerHeight * 0.9);
+      setScrolled(window.scrollY > 10);
     };
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll(); // run once on mount

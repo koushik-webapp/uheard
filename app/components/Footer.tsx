@@ -290,10 +290,10 @@ export default function Footer() {
           </p>
 
           <div style={{ display: 'flex', gap: '24px' }}>
-            {['Privacy Policy', 'Terms of Service'].map(item => (
+            {[{ label: 'Privacy Policy', href: '/privacy' }, { label: 'Terms & Conditions', href: '/terms' }].map(item => (
               <a
-                key={item}
-                href="#"
+                key={item.label}
+                href={item.href}
                 style={{
                   fontFamily: 'Montserrat, sans-serif',
                   fontSize: '11px', fontWeight: 400,
@@ -304,7 +304,7 @@ export default function Footer() {
                 onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#0a0a0a'; }}
                 onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.color = '#aaaaaa'; }}
               >
-                {item}
+                {item.label}
               </a>
             ))}
           </div>

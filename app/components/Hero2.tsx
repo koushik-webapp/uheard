@@ -54,7 +54,8 @@ export default function Hero2() {
           <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'stretch' }}>
             <div style={{ display: 'flex', alignItems: 'baseline' }}>
               <span style={{ ...titleFont, color: '#C62828' }}>U</span>
-              <span style={{ ...titleFont, color: '#111111', marginLeft: '0.18em' }}>HEARD</span>
+              <span style={{ ...titleFont, color: '#111111' }}>-</span>
+              <span style={{ ...titleFont, color: '#111111' }}>HEARD</span>
             </div>
             <div style={{ height: '3px', backgroundColor: '#C62828', width: '100%', marginTop: '14px', borderRadius: '1px' }} />
           </div>
@@ -92,7 +93,7 @@ export default function Hero2() {
           }}
           {...fadeIn(0.75)}
         >
-          Handcrafted candles designed to bring warmth, calm, and meaning into your space.
+          Handcrafted by <strong style={{ fontWeight: 600, color: '#444444' }}>Jacqueline</strong>, designed to bring warmth, calm, and meaning into your space.
         </motion.p>
 
         {/* CTA Button */}

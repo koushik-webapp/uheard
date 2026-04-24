@@ -1,7 +1,6 @@
 'use client';
 
 import { useRef } from 'react';
-import Image from 'next/image';
 import { motion, useInView } from 'framer-motion';
 
 const fadeUp = (delay = 0) => ({
@@ -26,27 +25,6 @@ export default function Contact() {
         padding: 'clamp(56px, 7vw, 88px) 0 clamp(64px, 8vw, 100px)',
       }}
     >
-      {/* ── Full-bleed background image ── */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 0 }}>
-        <Image
-          src="/location-bg.jpg"
-          alt=""
-          fill
-          style={{ objectFit: 'cover', objectPosition: 'center bottom' }}
-          priority
-          sizes="100vw"
-        />
-        {/* Soft white overlay for readability */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'rgba(255,255,255,0.30)',
-        }} />
-        {/* Left-side heavier fade for text legibility */}
-        <div style={{
-          position: 'absolute', inset: 0,
-          background: 'linear-gradient(to right, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 50%)',
-        }} />
-      </div>
 
       {/* ── Content wrapper ── */}
       <div style={{

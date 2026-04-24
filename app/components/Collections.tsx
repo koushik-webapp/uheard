@@ -1,8 +1,8 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 /* ─── Data ───────────────────────────────────────────────────────────────── */
 const products = [
@@ -15,7 +15,7 @@ const products = [
     reviews: 34,
     rating: 5,
     badge: 'BESTSELLER',
-    image: '/candles/bartlett-pear.png',
+    image: '/candles/bartlett-pear-v2.png',
   },
   {
     id: 2,
@@ -48,7 +48,7 @@ const products = [
     reviews: 21,
     rating: 4.5,
     badge: null,
-    image: '/candles/lavender.png',
+    image: '/candles/lavender-v2.png',
   },
   {
     id: 5,
@@ -84,6 +84,8 @@ const products = [
     image: '/candles/honeysuckle.png',
   },
 ];
+
+type Product = typeof products[0];
 
 /* ─── Star Rating ────────────────────────────────────────────────────────── */
 function StarRating({ rating }: { rating: number }) {
@@ -131,10 +133,119 @@ function CartIcon() {
   );
 }
 
-/* ─── Product Card ───────────────────────────────────────────────────────── */
-type Product = typeof products[0];
+/* ─── Lightbox ───────────────────────────────────────────────────────────── */
+function Lightbox({ product, onClose }: { product: Product; onClose: () => void }) {
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    document.addEventListener('keydown', onKey);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = '';
+    };
+  }, [onClose]);
 
-function ProductCard({ product, index }: { product: Product; index: number }) {
+  return (
+    <AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.25 }}
+        onClick={onClose}
+        style={{
+          position: 'fixed', inset: 0, zIndex: 9999,
+          background: 'rgba(0,0,0,0.88)',
+          backdropFilter: 'blur(8px)',
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          padding: '24px',
+        }}
+      >
+        {/* Image container — stop click propagation */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.92, y: 20 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          exit={{ opacity: 0, scale: 0.92, y: 20 }}
+          transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+          onClick={e => e.stopPropagation()}
+          style={{
+            position: 'relative',
+            maxWidth: '680px',
+            width: '100%',
+            borderRadius: '16px',
+            overflow: 'hidden',
+            boxShadow: '0 32px 80px rgba(0,0,0,0.5)',
+          }}
+        >
+          <Image
+            src={product.image}
+            alt={product.name}
+            width={680}
+            height={906}
+            style={{ width: '100%', height: 'auto', display: 'block' }}
+            priority
+          />
+
+          {/* Product name overlay at bottom */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0,
+            padding: '32px 24px 24px',
+            background: 'linear-gradient(to top, rgba(0,0,0,0.65), transparent)',
+          }}>
+            <p style={{
+              fontFamily: 'Montserrat, sans-serif',
+              fontSize: '10px', fontWeight: 700,
+              letterSpacing: '0.22em', textTransform: 'uppercase',
+              color: 'rgba(255,255,255,0.7)', margin: '0 0 4px',
+            }}>
+              {product.scentFamily}
+            </p>
+            <p style={{
+              fontFamily: '"Playfair Display", Georgia, serif',
+              fontSize: '22px', fontWeight: 700, fontStyle: 'italic',
+              color: '#ffffff', margin: 0,
+            }}>
+              {product.name}
+            </p>
+          </div>
+        </motion.div>
+
+        {/* Close button */}
+        <button
+          onClick={onClose}
+          style={{
+            position: 'fixed', top: '20px', right: '24px',
+            background: 'rgba(255,255,255,0.12)',
+            border: '1px solid rgba(255,255,255,0.2)',
+            borderRadius: '50%',
+            width: '42px', height: '42px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            color: '#ffffff', cursor: 'pointer',
+            transition: 'background 0.2s ease',
+          }}
+          onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.22)'; }}
+          onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.background = 'rgba(255,255,255,0.12)'; }}
+          aria-label="Close"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+            <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </motion.div>
+    </AnimatePresence>
+  );
+}
+
+/* ─── Product Card ───────────────────────────────────────────────────────── */
+function ProductCard({
+  product,
+  index,
+  onImageClick,
+}: {
+  product: Product;
+  index: number;
+  onImageClick: (p: Product) => void;
+}) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [revealed, setRevealed] = useState(false);
   const [hovered, setHovered] = useState(false);
@@ -161,13 +272,16 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
       style={{ cursor: 'pointer' }}
     >
       {/* ── Image area ── */}
-      <div style={{
-        position: 'relative',
-        aspectRatio: '3 / 4',
-        background: '#f5f4f1',
-        overflow: 'hidden',
-        borderRadius: '3px',
-      }}>
+      <div
+        onClick={() => onImageClick(product)}
+        style={{
+          position: 'relative',
+          aspectRatio: '3 / 4',
+          background: '#f5f4f1',
+          overflow: 'hidden',
+          borderRadius: '3px',
+        }}
+      >
         <Image
           src={product.image}
           alt={product.name}
@@ -181,6 +295,29 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
             transition: 'filter 0.55s ease, transform 0.55s ease',
           }}
         />
+
+        {/* Expand hint on hover */}
+        <div style={{
+          position: 'absolute', bottom: '12px', left: '12px',
+          opacity: hovered ? 1 : 0,
+          transform: hovered ? 'translateY(0)' : 'translateY(6px)',
+          transition: 'opacity 0.3s ease, transform 0.3s ease',
+          pointerEvents: 'none',
+        }}>
+          <div style={{
+            background: 'rgba(255,255,255,0.18)',
+            backdropFilter: 'blur(4px)',
+            border: '1px solid rgba(255,255,255,0.4)',
+            borderRadius: '50%',
+            width: '34px', height: '34px',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.8" strokeLinecap="round">
+              <polyline points="15 3 21 3 21 9" /><polyline points="9 21 3 21 3 15" />
+              <line x1="21" y1="3" x2="14" y2="10" /><line x1="3" y1="21" x2="10" y2="14" />
+            </svg>
+          </div>
+        </div>
 
         {/* Badge */}
         {product.badge && (
@@ -201,6 +338,7 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
         {/* Cart button */}
         <button
           aria-label="Add to bag"
+          onClick={e => e.stopPropagation()}
           style={{
             position: 'absolute', bottom: '12px', right: '12px',
             width: '34px', height: '34px',
@@ -231,7 +369,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
       {/* ── Product info ── */}
       <div style={{ padding: '14px 2px 20px' }}>
-        {/* Stars + reviews */}
         <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
           <StarRating rating={product.rating} />
           <span style={{
@@ -242,7 +379,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           </span>
         </div>
 
-        {/* Scent family */}
         <p style={{
           fontFamily: 'Montserrat, sans-serif',
           fontSize: '9.5px', fontWeight: 700,
@@ -252,7 +388,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           Scent Family: {product.scentFamily}
         </p>
 
-        {/* Name */}
         <h3 style={{
           fontFamily: '"Playfair Display", Georgia, serif',
           fontSize: 'clamp(15px, 1.4vw, 18px)',
@@ -262,7 +397,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           {product.name}
         </h3>
 
-        {/* Smells like */}
         <p style={{
           fontFamily: '"Playfair Display", Georgia, serif',
           fontSize: '13px', fontStyle: 'italic',
@@ -272,7 +406,6 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
           Smells like: {product.smellsLike}
         </p>
 
-        {/* Price */}
         <p style={{
           fontFamily: 'Montserrat, sans-serif',
           fontSize: '14px', fontWeight: 600,
@@ -287,6 +420,9 @@ function ProductCard({ product, index }: { product: Product; index: number }) {
 
 /* ─── Main Section ───────────────────────────────────────────────────────── */
 export default function Collections() {
+  const [lightboxProduct, setLightboxProduct] = useState<Product | null>(null);
+  const closeLightbox = useCallback(() => setLightboxProduct(null), []);
+
   return (
     <section
       id="collections"
@@ -337,7 +473,6 @@ export default function Collections() {
             </p>
           </div>
 
-          {/* Red accent line */}
           <div style={{
             marginTop: '20px',
             width: '100%', height: '1px',
@@ -355,26 +490,30 @@ export default function Collections() {
           }}
         >
           {products.map((p, i) => (
-            <ProductCard key={p.id} product={p} index={i} />
+            <ProductCard
+              key={p.id}
+              product={p}
+              index={i}
+              onImageClick={setLightboxProduct}
+            />
           ))}
         </div>
       </div>
 
+      {/* ── Lightbox ── */}
+      {lightboxProduct && (
+        <Lightbox product={lightboxProduct} onClose={closeLightbox} />
+      )}
+
       <style>{`
         @media (max-width: 1024px) {
-          .collections-grid {
-            grid-template-columns: repeat(3, 1fr) !important;
-          }
+          .collections-grid { grid-template-columns: repeat(3, 1fr) !important; }
         }
         @media (max-width: 768px) {
-          .collections-grid {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
+          .collections-grid { grid-template-columns: repeat(2, 1fr) !important; }
         }
         @media (max-width: 480px) {
-          .collections-grid {
-            grid-template-columns: 1fr !important;
-          }
+          .collections-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
