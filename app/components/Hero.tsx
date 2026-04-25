@@ -50,7 +50,7 @@ export default function Hero() {
       {/* Hero content — upper-center */}
       <div
         className="absolute inset-0 z-20 flex flex-col items-center"
-        style={{ paddingTop: '10%' }}
+        style={{ paddingTop: '6%' }}
       >
         {/* Title + underline */}
         <motion.div
