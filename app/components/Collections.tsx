@@ -26,7 +26,7 @@ const products = [
     reviews: 51,
     rating: 5,
     badge: 'BESTSELLER',
-    image: '/candles/coco-chanel.png',
+    image: '/candles/coco-chanel-v2.png',
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const products = [
     reviews: 28,
     rating: 4.5,
     badge: null,
-    image: '/candles/fresh-rose.png',
+    image: '/candles/fresh-rose-v3.png',
   },
   {
     id: 4,
@@ -48,18 +48,18 @@ const products = [
     reviews: 21,
     rating: 4.5,
     badge: null,
-    image: '/candles/lavender-v2.png',
+    image: '/candles/lavender-v4.png',
   },
   {
     id: 5,
-    name: 'Gorgeous Gucci',
+    name: 'Polo Red',
     scentFamily: 'FRUITY / FLORAL',
     smellsLike: 'Pear blossom, gardenia, and a base of brown sugar.',
     price: '$24.00',
     reviews: 19,
     rating: 5,
     badge: 'BESTSELLER',
-    image: '/candles/gorgeous-gucci.png',
+    image: '/candles/polo-red-v2.png',
   },
   {
     id: 6,
@@ -70,7 +70,7 @@ const products = [
     reviews: 25,
     rating: 4,
     badge: null,
-    image: '/candles/tommy-girl.png',
+    image: '/candles/tommy-girl-v2.png',
   },
   {
     id: 7,
@@ -81,7 +81,18 @@ const products = [
     reviews: 17,
     rating: 5,
     badge: null,
-    image: '/candles/honeysuckle.png',
+    image: '/candles/honeysuckle-v3.png',
+  },
+  {
+    id: 8,
+    name: 'Gorgeous Gucci',
+    scentFamily: 'CITRUS / FLORAL',
+    smellsLike: 'Bright citrus, soft florals, and elegant warmth.',
+    price: '$22.00',
+    reviews: 23,
+    rating: 5,
+    badge: null,
+    image: '/candles/gorgeous-gucci-v3.png',
   },
 ];
 

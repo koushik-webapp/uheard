@@ -38,7 +38,7 @@ export default function Hero() {
         aria-hidden="true"
       >
         <video
-          src="/hero-video.mp4"
+          src="/hero-collections.mp4"
           autoPlay
           loop
           muted
@@ -61,7 +61,8 @@ export default function Hero() {
           <div style={{ display: 'inline-flex', flexDirection: 'column', alignItems: 'stretch' }}>
             <div style={{ display: 'flex', alignItems: 'baseline' }}>
               <span style={{ ...titleFont, color: '#C62828' }}>U</span>
-              <span style={{ ...titleFont, color: '#111111', marginLeft: '0.18em' }}>HEARD</span>
+              <span style={{ ...titleFont, color: '#111111' }}>-</span>
+              <span style={{ ...titleFont, color: '#111111' }}>HEARD</span>
             </div>
             <div style={{ height: '3px', backgroundColor: '#C62828', width: '100%', marginTop: '14px', borderRadius: '1px' }} />
           </div>
@@ -84,32 +85,6 @@ export default function Hero() {
           Where Every Flame Tells a Story.
         </motion.p>
 
-        {/* CTA Button */}
-        <motion.a
-          href="#collections"
-          style={{
-            display: 'inline-block',
-            marginTop: 'clamp(18px, 2.5vw, 28px)',
-            padding: '12px 36px',
-            backgroundColor: '#C62828',
-            color: '#ffffff',
-            fontFamily: 'Montserrat, Helvetica Neue, Arial, sans-serif',
-            fontWeight: 600,
-            fontSize: '11px',
-            letterSpacing: '0.12em',
-            textTransform: 'uppercase' as const,
-            borderRadius: '100px',
-            border: '1px solid rgba(210,170,90,0.2)',
-            boxShadow: '0 6px 24px rgba(198,40,40,0.22)',
-            textDecoration: 'none',
-            transition: 'filter 0.3s ease',
-          }}
-          {...fadeIn(1.4)}
-          onMouseEnter={e => { (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1.1)'; }}
-          onMouseLeave={e => { (e.currentTarget as HTMLAnchorElement).style.filter = 'brightness(1)'; }}
-        >
-          Explore the Collection
-        </motion.a>
       </div>
     </section>
   );

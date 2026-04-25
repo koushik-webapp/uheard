@@ -1,7 +1,8 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -10,7 +11,18 @@ const fadeUp = (delay = 0) => ({
   transition: { duration: 0.9, delay, ease: [0.22, 1, 0.36, 1] as const },
 });
 
+const images = ['/section-bg.png', '/lifestyle-bg-2.png', '/lifestyle-bg-3.png'];
+
 export default function Lifestyle() {
+  const [current, setCurrent] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrent(prev => (prev + 1) % images.length);
+    }, 2500);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section
       style={{
@@ -20,20 +32,31 @@ export default function Lifestyle() {
         overflow: 'hidden',
       }}
     >
-      {/* Background image */}
-      <Image
-        src="/section-bg.png"
-        alt="Jacqueline's Enchanting Candles lifestyle"
-        fill
-        style={{ objectFit: 'cover', objectPosition: 'center center' }}
-        sizes="100vw"
-        priority
-      />
+      {/* Auto-scrolling background images */}
+      <AnimatePresence initial={false}>
+        <motion.div
+          key={current}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: 'easeInOut' }}
+          style={{ position: 'absolute', inset: 0, zIndex: 0 }}
+        >
+          <Image
+            src={images[current]}
+            alt="Handcrafted for You"
+            fill
+            style={{ objectFit: 'cover', objectPosition: 'center center' }}
+            sizes="100vw"
+            priority
+          />
+        </motion.div>
+      </AnimatePresence>
 
       {/* Soft warm overlay */}
-      <div style={{ position: 'absolute', inset: 0, background: 'rgba(255,248,242,0.42)' }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'rgba(255,248,242,0.42)' }} />
 
-      {/* ── Content: label + heading + CTA grouped at top center ── */}
+      {/* ── Content: stable, always on top ── */}
       <div style={{
         position: 'absolute', zIndex: 2,
         top: 'clamp(40px, 7vh, 72px)',
@@ -59,7 +82,7 @@ export default function Lifestyle() {
           <div style={{ width: '28px', height: '1px', background: '#C62828', opacity: 0.7 }} />
         </motion.div>
 
-        {/* Heading — single line */}
+        {/* Heading */}
         <motion.h2 {...fadeUp(0.1)} style={{
           fontFamily: '"Playfair Display", Georgia, serif',
           fontSize: 'clamp(26px, 3.8vw, 52px)',
@@ -71,7 +94,7 @@ export default function Lifestyle() {
           Made with intention. Burned with love.
         </motion.h2>
 
-        {/* CTA — directly under heading */}
+        {/* CTA */}
         <motion.a
           {...fadeUp(0.18)}
           href="/collections"

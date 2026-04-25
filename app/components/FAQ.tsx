@@ -162,7 +162,7 @@ export default function FAQ() {
   const toggle = (id: string) => setActiveId(prev => (prev === id ? null : id));
 
   return (
-    <section style={{
+    <section id="faq" style={{
       position: 'relative',
       padding: 'clamp(64px, 8vw, 100px) clamp(16px, 4vw, 56px)',
     }}>

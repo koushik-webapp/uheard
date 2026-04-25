@@ -2,6 +2,7 @@ import { SimpleHeader } from "@/components/ui/simple-header";
 import Hero from "../components/Hero";
 import Collections from "../components/Collections";
 import Reviews from "../components/Reviews";
+import CollectionsClosing from "../components/CollectionsClosing";
 import Footer from "../components/Footer";
 
 export default function CollectionsPage() {
@@ -12,6 +13,7 @@ export default function CollectionsPage() {
         <Hero />
         <Collections />
         <Reviews />
+        <CollectionsClosing />
       </main>
       <Footer />
     </>
